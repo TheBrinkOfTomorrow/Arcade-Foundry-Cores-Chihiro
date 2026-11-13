@@ -1,0 +1,1 @@
+# Crazy Taxi High Roller test program (ctx_ac_t.xbe): patches by address (see ../patches.txt)

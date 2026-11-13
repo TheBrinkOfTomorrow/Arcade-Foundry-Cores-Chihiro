@@ -1,0 +1,15 @@
+# CRI middleware's lock (ADXM): on the Xbox it raises the caller to
+# time-critical, which on one processor keeps CRI's other threads out. Here
+# they run on other cores, so lock and unlock become the runtime's priority
+# lock (out 0xe8 / out 0xe9, see runtime/kthread.c prio_enter), as for
+# HotD3. Without it the boot logo's Sofdec/ADX stream raced CRI's file
+# server and about 1 boot in 4 stayed on the logo (thread 13 never made).
+0xc51f0 e6 e8 c3     # lock: out 0xe8, al; ret
+0xc5230 e6 e9 c3     # unlock: out 0xe9, al; ret
+# CRI's "release the lock entirely" (0xd00e0: unlock while GetThreadPriority
+# says time-critical, return the count) and "take it n times" (0xd0110):
+# with the lock patched above the priority never rises, so 0xd00e0 released
+# nothing and the code it brackets kept the lock (a demux ring-buffer race:
+# error 0xff000f1c on the boot logo's stream, which then never ended)
+0xd00e0 e5 ea c3                 # in eax, 0xea (release all, eax = depth); ret
+0xd0110 8b 44 24 04 e7 eb c3     # mov eax, [esp+4]; out 0xeb, eax (take eax times); ret

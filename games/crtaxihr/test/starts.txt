@@ -1,0 +1,2 @@
+# Crazy Taxi High Roller test program (ctx_ac_t.xbe): function starts discovery misses
+1c836  # BACKUP DATA CLEAR, menu item 7, reached only through the menu table at 0xda5f8

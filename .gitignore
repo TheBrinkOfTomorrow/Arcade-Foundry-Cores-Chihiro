@@ -1,0 +1,26 @@
+# Build output, including the C the recompiler writes from a game binary
+build/
+build-*/
+gen/
+*.o
+
+# Fetched dependencies
+extern/
+
+# An old per-checkout venv (now the shared ~/venvs/afic: common/tools/afic-venv)
+venv
+
+# Game data and anything derived from it — legal, not tidiness
+*.xbe
+*.bin
+*.afs
+*.AFS
+*.7z
+*.zip
+*.iso
+*.img
+*.chd
+media/
+save/
+tmp/
+__pycache__/

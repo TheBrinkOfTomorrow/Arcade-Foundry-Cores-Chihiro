@@ -1,0 +1,8 @@
+# CRI middleware's lock (ADXM): on the Xbox it raises the caller to
+# time-critical, which on one processor keeps CRI's other threads out. Here
+# they run on other cores, so lock and unlock become the runtime's priority
+# lock (out 0xe8 / out 0xe9, see runtime/kthread.c prio_enter). Without it
+# the file server could read a file slot while the game was filling it in,
+# open an empty name and stall a movie.
+0xbe6d0 e6 e8 c3     # lock: out 0xe8, al; ret
+0xbe710 e6 e9 c3     # unlock: out 0xe9, al; ret

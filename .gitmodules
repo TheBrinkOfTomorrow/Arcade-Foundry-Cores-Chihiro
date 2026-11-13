@@ -1,0 +1,4 @@
+[submodule "common"]
+	path = common
+	url = https://github.com/TheBrinkOfTomorrow/Arcade-Foundry-Cores-Common
+	branch = main
